@@ -1,7 +1,7 @@
 const dateFns = require('date-fns');
 
 const REFERENCE_DATE = new Date(2019, 3, 25, 0, 0, 0);
-const DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mmHss';
+const DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 const DATE_FORMAT = 'YYYY-MM-DD';
 
 function adjustDateTime(dateTimeStr) {
