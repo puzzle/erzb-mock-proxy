@@ -1,6 +1,7 @@
 const express = require('express');
 const proxy = require('express-http-proxy');
 const url = require('url');
+const cache = require('apicache').middleware;
 
 const PORT = process.env.PORT || 3000;
 const MOCK_API_URL = process.env.MOCK_API_URL;
@@ -17,6 +18,7 @@ const transformations = {
 const app = express();
 
 app.use(
+  cache('30 minutes'),
   proxy(MOCK_API_URL, {
     userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
       const { pathname } = url.parse(userReq.url);

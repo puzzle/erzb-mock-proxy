@@ -1,6 +1,10 @@
 # erzb-mock-proxy
 
-This is a proxy server used during development of the [erz-mba-fbi/absenzenmanagement](https://github.com/erz-mba-fbi/absenzenmanagement) project. It mocks additional behavior that is not provided by the Postman mock server like filtering, date transformations etc.
+This is a proxy server used during development of the
+[erz-mba-fbi/absenzenmanagement](https://github.com/erz-mba-fbi/absenzenmanagement)
+project. It mocks additional behavior that is not provided by the
+Postman mock server like filtering, date transformations etc. and
+caches responses from the mock server.
 
 ## Usage
 
