@@ -17,6 +17,9 @@ const transformations = {
 
 const app = express();
 
+app.post('/BulkEditLessonPresence', (req, res) => res.status(200).send());
+app.post('/BulkResetLessonPresence', (req, res) => res.status(200).send());
+
 const proxyImages = proxy('https://placeimg.com', {
   filter: (req, res) =>
     req.method == 'GET' &&
@@ -25,8 +28,7 @@ const proxyImages = proxy('https://placeimg.com', {
   userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
     // Return a 404 for 10% of the images
     if (Math.random() < 0.1) {
-      userRes.status(404);
-      userRes.contentType('text/html');
+      userRes.status(404).contentType('text/html');
       return 'Image not found';
     }
     return proxyResData;
