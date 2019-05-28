@@ -12,7 +12,8 @@ if (!MOCK_API_URL) {
 }
 
 const transformations = {
-  '/LessonPresences': require('./transformations/lesson-presences')
+  '/LessonPresences': require('./transformations/lesson-presences'),
+  '/Students': require('./transformations/students')
 };
 
 const app = express();
