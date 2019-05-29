@@ -13,13 +13,18 @@ if (!MOCK_API_URL) {
 
 const transformations = {
   '/LessonPresences': require('./transformations/lesson-presences'),
-  '/Students': require('./transformations/students')
+  '/Students': require('./transformations/students'),
+  '/Persons': require('./transformations/persons'),
+  '/ApprenticeshipContracts': require('./transformations/apprenticeship-contracts')
 };
 
 const app = express();
 
-app.post('/BulkEditLessonPresence', (req, res) => res.status(200).send());
-app.post('/BulkResetLessonPresence', (req, res) => res.status(200).send());
+app.put('/BulkEditLessonPresence', (req, res) => res.status(200).send());
+app.put('/BulkResetLessonPresence', (req, res) => res.status(200).send());
+app.get('/Students/37435/ApprenticeshipContracts/Current', (req, res) =>
+  res.status(404).send()
+);
 
 const proxyImages = proxy('https://placeimg.com', {
   filter: (req, res) =>
