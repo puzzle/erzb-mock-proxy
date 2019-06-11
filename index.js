@@ -20,11 +20,17 @@ const transformations = {
 
 const app = express();
 
+app.get('/*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.put('/BulkEditLessonPresence', (req, res) => res.status(200).send());
 app.put('/BulkResetLessonPresence', (req, res) => res.status(200).send());
 app.get('/Students/37435/ApprenticeshipContracts/Current', (req, res) =>
   res.status(404).send()
 );
+app.get('/Students/39361', (req, res) => res.status(404).send());
 
 const proxyImages = proxy('https://placeimg.com', {
   filter: (req, res) =>
