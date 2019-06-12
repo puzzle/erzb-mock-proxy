@@ -12,10 +12,11 @@ if (!MOCK_API_URL) {
 }
 
 const transformations = {
-  '/LessonPresences': require('./transformations/lesson-presences'),
-  '/Students': require('./transformations/students'),
-  '/Persons': require('./transformations/persons'),
-  '/ApprenticeshipContracts': require('./transformations/apprenticeship-contracts')
+  '^/LessonPresences$': require('./transformations/lesson-presences'),
+  '^/Students$': require('./transformations/students'),
+  '^/Persons$': require('./transformations/persons'),
+  '^/ApprenticeshipContracts$': require('./transformations/apprenticeship-contracts'),
+  '^/Students/[0-9]+/LegalRepresentatives$': require('./transformations/legal-representatives')
 };
 
 const app = express();
@@ -50,9 +51,12 @@ const proxyImages = proxy('https://placeimg.com', {
 const proxyMockApi = proxy(MOCK_API_URL, {
   userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
     const { pathname } = url.parse(userReq.url);
-    if (Object.keys(transformations).includes(pathname)) {
+    const transformationKey = Object.keys(transformations).find(r =>
+      new RegExp(r).test(pathname)
+    );
+    if (transformationKey) {
       const input = JSON.parse(proxyResData);
-      const output = transformations[pathname](userReq, input);
+      const output = transformations[transformationKey](userReq, input);
       return JSON.stringify(output);
     }
     return proxyResData;
