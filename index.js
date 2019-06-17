@@ -2,6 +2,7 @@ const express = require('express');
 const proxy = require('express-http-proxy');
 const url = require('url');
 const cache = require('apicache').middleware;
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 const MOCK_API_URL = process.env.MOCK_API_URL;
@@ -21,10 +22,7 @@ const transformations = {
 
 const app = express();
 
-app.get('/*', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+app.use(cors({ origin: true }));
 
 app.put('/BulkEditLessonPresence', (req, res) => res.status(200).send());
 app.put('/BulkResetLessonPresence', (req, res) => res.status(200).send());
