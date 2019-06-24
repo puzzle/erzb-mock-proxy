@@ -22,17 +22,29 @@ function transformLessonPresences(req, data) {
 }
 
 function filterLessonPresences(req, data) {
-  const lessonDateTimeFromFilter = getFilterValue(
-    req,
-    'LessonDateTimeFrom',
-    '='
-  );
-  if (lessonDateTimeFromFilter) {
-    return data.filter(lessonPresence =>
-      sameDay(lessonDateTimeFromFilter, lessonPresence.LessonDateTimeFrom)
+  let result = data;
+
+  const dateTimeFrom = getFilterValue(req, 'LessonDateTimeFrom', '=');
+  if (dateTimeFrom) {
+    result = result.filter(lessonPresence =>
+      sameDay(dateTimeFrom, lessonPresence.LessonDateTimeFrom)
     );
   }
-  return data;
+
+  const confirmationStateId = getFilterValue(
+    req,
+    'PresenceConfirmationStateId',
+    '='
+  );
+  if (confirmationStateId) {
+    result = result.filter(
+      lessonPresence =>
+        lessonPresence.PresenceConfirmationStateId ===
+        Number(confirmationStateId)
+    );
+  }
+
+  return result;
 }
 
 module.exports = transformLessonPresences;
