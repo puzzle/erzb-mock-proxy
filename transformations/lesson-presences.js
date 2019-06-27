@@ -11,11 +11,19 @@ function transformLessonPresences(req, data) {
         PresenceDate,
         ...rest
       } = lessonPresence;
+
+      const WasAbsentInPrecedingLesson =
+        rest.LessonRef.Id === 6785567 &&
+        [37665, 39059].includes(rest.StudentRef.Id)
+          ? 1
+          : undefined;
+
       return {
         ...rest,
         LessonDateTimeFrom: adjustDateTime(LessonDateTimeFrom),
         LessonDateTimeTo: adjustDateTime(LessonDateTimeTo),
-        PresenceDate: adjustDate(PresenceDate)
+        PresenceDate: adjustDate(PresenceDate),
+        WasAbsentInPrecedingLesson
       };
     })
   );
