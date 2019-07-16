@@ -18,12 +18,31 @@ function transformLessonPresences(req, data) {
           ? 1
           : undefined;
 
+      const dispensationPresenceTypes = [14, 19, 21];
+      const dispensatedStudents = [38332, 37524, 39361];
+      const PresenceTypeRef =
+        rest.LessonRef.Id === 6785473 &&
+        dispensatedStudents.includes(rest.StudentRef.Id)
+          ? {
+              Id:
+                dispensationPresenceTypes[
+                  dispensatedStudents.indexOf(rest.StudentRef.Id)
+                ],
+              Href: `/PresenceTypes/${
+                dispensationPresenceTypes[
+                  dispensatedStudents.indexOf(rest.StudentRef.Id)
+                ]
+              }`
+            }
+          : rest.PresenceTypeRef;
+
       return {
         ...rest,
         LessonDateTimeFrom: adjustDateTime(LessonDateTimeFrom),
         LessonDateTimeTo: adjustDateTime(LessonDateTimeTo),
         PresenceDate: adjustDate(PresenceDate),
-        WasAbsentInPrecedingLesson
+        WasAbsentInPrecedingLesson,
+        PresenceTypeRef
       };
     })
   );
