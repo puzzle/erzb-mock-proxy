@@ -58,16 +58,34 @@ function filterLessonPresences(req, data) {
     );
   }
 
-  const confirmationStateId = getFilterValue(
-    req,
-    'PresenceConfirmationStateId',
-    '='
-  );
+  const confirmationStateId = getFilterValue(req, 'ConfirmationStateId', '=');
   if (confirmationStateId) {
     result = result.filter(
       lessonPresence =>
         lessonPresence.PresenceConfirmationStateId ===
         Number(confirmationStateId)
+    );
+  }
+
+  const absencePresenceTypeId = getFilterValue(req, 'TypeRef', '=');
+  if (absencePresenceTypeId) {
+    result = result.filter(lessonPresence =>
+      lessonPresence.PresenceTypeRef
+        ? lessonPresence.PresenceTypeRef.Id === Number(absencePresenceTypeId)
+        : false
+    );
+  }
+
+  const hasStudyCourseConfirmationCode = getFilterValue(
+    req,
+    'HasStudyCourseConfirmationCode',
+    '='
+  );
+  if (hasStudyCourseConfirmationCode) {
+    result = result.filter(
+      lessonPresence =>
+        lessonPresence.HasStudyCourseConfirmationCode ===
+        (hasStudyCourseConfirmationCode === true ? 1 : 0)
     );
   }
 
